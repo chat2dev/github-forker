@@ -55,15 +55,27 @@ When you detect a truncated URL (ends with `...` or `…`, or the repo name is c
    ```
    Use whatever partial info you have — owner + partial repo name is ideal; owner alone works too.
 
-2. **Show candidates** to the user (up to 5), with stars and description to help them identify:
+2. **Use context to pick the best match.** Look at surrounding text, tweet content, project name
+   mentioned, description keywords, and star count. If one result stands out clearly:
+   - The repo name starts with the visible partial (e.g. `op...` → `openchamber` matches)
+   - The description aligns with what the user said (e.g. "UI真好" → pick the UI-focused one)
+   - It has significantly more stars than the others
+
+   If you're confident, proceed directly and tell the user your reasoning:
    ```
-   Found truncated URL "github.com/openchamber/op..." — which repo did you mean?
-   1. openchamber/OpenChamber ⭐1.2k — A beautiful open-source UI framework
-   2. openchamber/openchamber-docs ⭐34 — Documentation site
+   "github.com/openchamber/op..." → inferred openchamber/openchamber ⭐1.5k (Desktop UI for OpenCode, matches context "UI真好")
+   ```
+
+3. **Ask the user only when genuinely uncertain** — when multiple results are plausible and
+   context doesn't help distinguish them:
+   ```
+   Found truncated URL "github.com/foo/bar..." — which repo did you mean?
+   1. foo/barista ⭐420 — Coffee shop POS system
+   2. foo/baroque ⭐38 — Baroque music generator
    Enter number (or 0 to skip):
    ```
 
-3. **Wait for confirmation** before forking. Never fork a truncated URL without user approval.
+   Never fork a truncated URL without either a confident inference or explicit user confirmation.
 
 ## Step 2: Fork via GitHub API
 
