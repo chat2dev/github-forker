@@ -1,7 +1,8 @@
 # packaged skill file
 *.skill
 
-# eval workspace
+# evals
+evals/
 *-workspace/
 
 # misc
