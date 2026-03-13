@@ -21,64 +21,21 @@ cp -r github-forker ~/.claude/skills/github-forker
 
 ## Setup
 
-### 1. Install Git
+This skill uses the GitHub REST API directly — no `git` CLI or SSH key required.
 
-**macOS**
-```bash
-brew install git
-```
+### GitHub Token
 
-**Ubuntu / Debian**
-```bash
-sudo apt update && sudo apt install git -y
-```
-
-**Windows**
-
-Download and install from https://git-scm.com/download/win
-
-### 2. Configure SSH Key (passwordless access)
-
-Generate an SSH key and add it to GitHub so you never need to enter a password:
-
-```bash
-# Generate key (use your GitHub email)
-ssh-keygen -t ed25519 -C "your@email.com"
-# Press Enter to accept default path (~/.ssh/id_ed25519), set passphrase if desired
-
-# Add key to ssh-agent
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_ed25519
-
-# Copy public key to clipboard
-# macOS
-cat ~/.ssh/id_ed25519.pub | pbcopy
-# Linux
-cat ~/.ssh/id_ed25519.pub | xclip -selection clipboard
-```
-
-Then go to **GitHub → Settings → SSH and GPG keys → New SSH key**, paste and save.
-
-Verify it works:
-```bash
-ssh -T git@github.com
-# Hi username! You've successfully authenticated...
-```
-
-### 3. Set GitHub Token
-
-The skill uses the GitHub REST API to fork and star repos, which requires a Personal Access Token (classic PAT with `repo` or `public_repo` scope).
+Generate a classic PAT with `repo` or `public_repo` scope:
+**GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)**
 
 ```bash
 # Set for current session
 export GITHUB_TOKEN="ghp_..."
 
-# Persist across sessions (add to shell config)
+# Persist across sessions
 echo 'export GITHUB_TOKEN="ghp_..."' >> ~/.zshrc   # zsh
 echo 'export GITHUB_TOKEN="ghp_..."' >> ~/.bashrc  # bash
 ```
-
-Generate a token at: **GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)**
 
 ## Usage
 
