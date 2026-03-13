@@ -39,6 +39,32 @@ When the user provides an image (screenshot, photo, diagram), use your vision ca
 read the image and identify any GitHub URLs or repo references visible in it. Apply the same
 extraction rules as above to whatever text you find.
 
+### Truncated URLs
+URLs are often cut off in screenshots or social media previews, like:
+- `github.com/openchamber/op...`
+- `github.com/some-owner/proj…`
+
+When you detect a truncated URL (ends with `...` or `…`, or the repo name is clearly incomplete):
+
+1. **Search GitHub** for matching repos:
+   ```bash
+   curl -s -L \
+     -H "Authorization: Bearer $GITHUB_TOKEN" \
+     -H "Accept: application/vnd.github+json" \
+     "https://api.github.com/search/repositories?q={owner}/{partial}+in:full_name&per_page=5"
+   ```
+   Use whatever partial info you have — owner + partial repo name is ideal; owner alone works too.
+
+2. **Show candidates** to the user (up to 5), with stars and description to help them identify:
+   ```
+   Found truncated URL "github.com/openchamber/op..." — which repo did you mean?
+   1. openchamber/OpenChamber ⭐1.2k — A beautiful open-source UI framework
+   2. openchamber/openchamber-docs ⭐34 — Documentation site
+   Enter number (or 0 to skip):
+   ```
+
+3. **Wait for confirmation** before forking. Never fork a truncated URL without user approval.
+
 ## Step 2: Fork via GitHub API
 
 For each unique `{owner}/{repo}` pair, call the fork endpoint:
