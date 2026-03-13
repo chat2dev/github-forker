@@ -21,9 +21,23 @@ cp -r github-forker ~/.claude/skills/github-forker
 
 ## Setup
 
-This skill uses the GitHub REST API directly — no `git` CLI or SSH key required.
+This skill uses the GitHub REST API via `curl` — no `git` CLI or SSH key required.
 
-### GitHub Token
+### 1. Install curl
+
+**macOS** — pre-installed. Verify:
+```bash
+curl --version
+```
+
+**Ubuntu / Debian**
+```bash
+sudo apt update && sudo apt install curl -y
+```
+
+**Windows** — included in Windows 10/11. Or install via [curl.se](https://curl.se/windows/).
+
+### 2. GitHub Token
 
 Generate a classic PAT with `repo` or `public_repo` scope:
 **GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)**
