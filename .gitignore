@@ -1,0 +1,8 @@
+# packaged skill file
+*.skill
+
+# eval workspace
+*-workspace/
+
+# misc
+.DS_Store
